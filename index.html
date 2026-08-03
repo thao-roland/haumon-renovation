@@ -68,33 +68,33 @@
 
 <main id="main">
 
-<!-- ═══════════════════════ HERO ═══════════════════════ -->
-<section class="relative flex min-h-[100svh] items-end overflow-hidden pb-16 pt-[var(--nav-h)] sm:pb-24">
-  <figure class="media hero-media absolute inset-0 -z-10">
+<!-- ═══════════════════════ HERO — COMPOSITION SCINDÉE ═══════════════════════ -->
+<section class="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-[var(--nav-h)]">
+  <figure class="media hero-media order-first h-[44svh] w-full sm:h-[50svh] lg:absolute lg:inset-y-0 lg:right-0 lg:order-none lg:h-auto lg:w-[47%]">
     <img
-      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
-      srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=75 1200w,
-              https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80 2400w"
-      sizes="100vw"
+      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=1600&amp;q=80"
+      srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=900&amp;q=75 900w,
+              https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=1600&amp;q=80 1600w"
+      sizes="(min-width: 1024px) 47vw, 100vw"
       alt="Villa contemporaine à toiture plate en zinc, vue extérieure au crépuscule"
       fetchpriority="high" decoding="async">
-    <div class="scrim-b absolute inset-0"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/25 to-transparent lg:bg-gradient-to-r lg:from-ink-950 lg:via-ink-950/5 lg:to-transparent"></div>
   </figure>
 
-  <div class="shell w-full">
-    <div class="max-w-5xl">
+  <div class="shell w-full py-14 lg:py-0">
+    <div class="max-w-xl lg:max-w-[26rem] xl:max-w-[34rem] 2xl:max-w-[38rem]">
       <p class="eyebrow" data-intro style="--intro-delay:120ms">Bruxelles · Brabant wallon · Depuis 2006</p>
 
-      <h1 class="display mt-8 text-[clamp(2.9rem,8.6vw,7.25rem)] text-white" data-intro style="--intro-delay:240ms">
+      <h1 class="display mt-8 text-[clamp(2.4rem,4.4vw,4.5rem)] text-white" data-intro style="--intro-delay:240ms">
         Rénover,<br>sans compromis.
       </h1>
 
-      <p class="lede mt-8 max-w-xl text-lg sm:text-xl" data-intro style="--intro-delay:400ms">
+      <p class="lede mt-7 text-lg" data-intro style="--intro-delay:400ms">
         Toitures, façades et extérieurs d’exception. Un seul interlocuteur,
         du premier croquis à la dernière tuile.
       </p>
 
-      <div class="mt-11 flex flex-wrap items-center gap-4" data-intro style="--intro-delay:560ms">
+      <div class="mt-10 flex flex-wrap items-center gap-4" data-intro style="--intro-delay:560ms">
         <a href="contact.html#devis" class="btn btn-primary">
           Demander un devis gratuit
           <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -109,34 +109,17 @@
     </div>
   </div>
 
-  <div class="scroll-cue absolute bottom-8 right-[var(--gutter)] hidden lg:block" aria-hidden="true">
+  <div class="scroll-cue absolute bottom-8 left-[var(--gutter)] hidden lg:block" aria-hidden="true">
     <span></span>
   </div>
 </section>
 
-<!-- ═══════════════════════ CHIFFRES ═══════════════════════ -->
-<section class="border-y border-white/5 bg-ink-950/40">
-  <div class="shell grid grid-cols-2 gap-y-10 py-14 lg:grid-cols-4" data-reveal-stagger="110">
-    <div data-reveal>
-      <p class="display text-4xl text-white sm:text-5xl"><span data-count="19">0</span></p>
-      <p class="mt-3 text-xs uppercase tracking-[0.2em] text-silver-500">Années d’activité</p>
-    </div>
-    <div data-reveal>
-      <p class="display text-4xl text-white sm:text-5xl"><span data-count="640">0</span></p>
-      <p class="mt-3 text-xs uppercase tracking-[0.2em] text-silver-500">Chantiers livrés</p>
-    </div>
-    <div data-reveal>
-      <p class="display text-4xl text-white sm:text-5xl"><span data-count="10">0</span> <span class="text-2xl text-sage-300">ans</span></p>
-      <p class="mt-3 text-xs uppercase tracking-[0.2em] text-silver-500">Garantie décennale</p>
-    </div>
-    <div data-reveal>
-      <p class="display text-4xl text-white sm:text-5xl"><span data-count="98">0</span><span class="text-2xl text-sage-300">%</span></p>
-      <p class="mt-3 text-xs uppercase tracking-[0.2em] text-silver-500">Clients satisfaits</p>
-    </div>
-  </div>
+<!-- ═══════════════════════ TICKER — GARANTIES ═══════════════════════ -->
+<section class="marquee-wrap overflow-hidden border-y border-white/5 py-8" aria-label="Nos garanties">
+  <div class="marquee"><div class="flex shrink-0 items-center"><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Assurance décennale AXA<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">640 chantiers livrés<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Agréation classe 3<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Équipes salariées<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">TVA 6 % vérifiée<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Devis sous 5 jours<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Visite technique offerte<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Certifié VCA<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span></div><div class="flex shrink-0 items-center"><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Assurance décennale AXA<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">640 chantiers livrés<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Agréation classe 3<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Équipes salariées<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">TVA 6 % vérifiée<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Devis sous 5 jours<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Visite technique offerte<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span><span class="flex items-center gap-12 px-6 text-sm font-light uppercase tracking-[0.2em] text-silver-600">Certifié VCA<span class="h-1 w-1 rounded-full bg-sage-500/70"></span></span></div></div>
 </section>
 
-<!-- ═══════════════════════ BENTO — 3 BÉNÉFICES ═══════════════════════ -->
+<!-- ═══════════════════════ BENTO — 3 BÉNÉFICES + TUILES D’APPUI ═══════════════════════ -->
 <section class="py-28 sm:py-36" id="atouts">
   <div class="shell">
     <div class="max-w-2xl" data-reveal>
@@ -146,89 +129,129 @@
       </h2>
     </div>
 
-    <div class="mt-16 grid gap-5 md:grid-cols-3" data-reveal-stagger="130">
+    <div class="mt-16 grid gap-4 lg:grid-cols-12" data-reveal-stagger="110">
 
-      <article class="panel flex flex-col p-8 sm:p-10" data-reveal>
-        <span class="icon-plate">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="5" r="2"/><path d="M11 6.8 5.5 20M13 6.8 18.5 20"/><path d="M8.6 14.6h6.8"/>
-          </svg>
-        </span>
-        <h3 class="mt-8 text-xl font-normal tracking-tight text-white">Un maître d’œuvre unique</h3>
-        <p class="lede mt-4 text-[0.95rem]">
-          Un seul responsable de chantier, joignable directement, du relevé initial
-          à la réception des travaux. Aucune sous-traitance en cascade.
-        </p>
-        <ul class="mt-7 space-y-2.5 text-sm font-light text-silver-400">
-          <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Interlocuteur nommé dès le devis</li>
-          <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Rapport photo hebdomadaire</li>
-        </ul>
+      <!-- Tuile maîtresse -->
+      <article class="panel flex flex-col lg:col-span-7 lg:row-span-2" data-reveal>
+        <div class="flex flex-1 flex-col p-8 sm:p-11">
+          <span class="icon-plate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="5" r="2"/><path d="M11 6.8 5.5 20M13 6.8 18.5 20"/><path d="M8.6 14.6h6.8"/>
+            </svg>
+          </span>
+          <h3 class="mt-8 text-2xl font-light tracking-tight text-white sm:text-[1.75rem]">Un maître d’œuvre unique</h3>
+          <p class="lede mt-5 max-w-md">
+            Un seul responsable de chantier, joignable directement, du relevé initial
+            à la réception des travaux. Aucune sous-traitance en cascade, aucun
+            numéro de standard : le nom de votre interlocuteur figure sur le devis.
+          </p>
+          <ul class="mt-8 space-y-3 text-sm font-light text-silver-400">
+            <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Interlocuteur nommé dès le devis</li>
+            <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Rapport photo chaque vendredi</li>
+            <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Équipes salariées, pas d’intérim</li>
+          </ul>
+        </div>
+        <figure class="media media-zoom mt-auto h-52 w-full sm:h-64">
+          <img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Couvreur au travail sur une toiture en cours de rénovation" loading="lazy" decoding="async">
+          <div class="scrim-card absolute inset-0 opacity-60"></div>
+        </figure>
       </article>
 
-      <article class="panel flex flex-col p-8 sm:p-10" data-reveal>
+      <!-- Bénéfice 2 -->
+      <article class="panel flex flex-col p-8 sm:p-10 lg:col-span-5" data-reveal>
         <span class="icon-plate">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M6 3.5h12v17l-3-1.7-3 1.7-3-1.7-3 1.7z"/><path d="M9 8.5h6M9 12.5h6M9 16h3"/>
           </svg>
         </span>
-        <h3 class="mt-8 text-xl font-normal tracking-tight text-white">Un devis ferme, un prix tenu</h3>
+        <h3 class="mt-7 text-xl font-normal tracking-tight text-white">Un devis ferme, un prix tenu</h3>
         <p class="lede mt-4 text-[0.95rem]">
           Chaque poste est chiffré au détail après visite technique. Le montant
           signé est le montant facturé — les imprévus sont notre affaire.
         </p>
-        <ul class="mt-7 space-y-2.5 text-sm font-light text-silver-400">
-          <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Métré contradictoire inclus</li>
-          <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>TVA 6 % vérifiée pour vous</li>
-        </ul>
       </article>
 
-      <article class="panel flex flex-col p-8 sm:p-10" data-reveal>
+      <!-- Bénéfice 3 -->
+      <article class="panel flex flex-col p-8 sm:p-10 lg:col-span-5" data-reveal>
         <span class="icon-plate">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 3 4.5 6v6c0 4.4 3.1 7.9 7.5 9 4.4-1.1 7.5-4.6 7.5-9V6z"/><path d="m9 12 2.2 2.2L15.4 10"/>
           </svg>
         </span>
-        <h3 class="mt-8 text-xl font-normal tracking-tight text-white">Garanti dix ans, écrit noir sur blanc</h3>
+        <h3 class="mt-7 text-xl font-normal tracking-tight text-white">Garanti dix ans, écrit noir sur blanc</h3>
         <p class="lede mt-4 text-[0.95rem]">
           Assurance décennale, matériaux tracés et procès-verbal de réception
-          détaillé. Notre travail se juge dans dix ans, pas au dernier coup de balai.
+          détaillé. Notre travail se juge dans dix ans.
         </p>
-        <ul class="mt-7 space-y-2.5 text-sm font-light text-silver-400">
-          <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Entreprise enregistrée & assurée</li>
-          <li class="flex gap-3"><span class="mt-2 h-px w-4 flex-none bg-sage-400"></span>Visite de contrôle à 12 mois</li>
-        </ul>
       </article>
+
+      <!-- Tuile chiffres -->
+      <article class="panel p-8 sm:p-10 lg:col-span-5" data-reveal>
+        <p class="text-[0.68rem] uppercase tracking-[0.24em] text-silver-500">En chiffres</p>
+        <div class="mt-8 grid grid-cols-2 gap-8">
+          <div>
+            <p class="display text-4xl text-white"><span data-count="19">0</span></p>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-silver-500">Années d’activité</p>
+          </div>
+          <div>
+            <p class="display text-4xl text-white"><span data-count="640">0</span></p>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-silver-500">Chantiers livrés</p>
+          </div>
+          <div>
+            <p class="display text-4xl text-white"><span data-count="98">0</span><span class="text-xl text-sage-300">%</span></p>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-silver-500">Clients satisfaits</p>
+          </div>
+          <div>
+            <p class="display text-4xl text-white"><span data-count="10">0</span> <span class="text-xl text-sage-300">ans</span></p>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-silver-500">Garantie décennale</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tuile citation -->
+      <figure class="panel flex flex-col justify-between p-8 sm:p-11 lg:col-span-7" data-reveal>
+        <svg viewBox="0 0 24 24" class="h-6 w-6 text-sage-400" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+          <path d="M9.5 6C6.9 7.4 5.5 9.8 5.5 13v5h6v-6H8.4c.2-2 1.1-3.4 2.8-4.3zM19.5 6C16.9 7.4 15.5 9.8 15.5 13v5h6v-6h-3.1c.2-2 1.1-3.4 2.8-4.3z"/>
+        </svg>
+        <blockquote class="mt-7 text-[clamp(1.15rem,2vw,1.6rem)] font-light leading-[1.45] tracking-tight text-white">
+          « Toiture, façade et jardin repris en une seule opération, dans les délais
+          annoncés au jour près. Trois ans plus tard, pas une reprise à signaler. »
+        </blockquote>
+        <figcaption class="mt-8 text-sm font-light text-silver-500">
+          Christine &amp; Marc D. — <span class="text-silver-400">maison de maître, Rhode-Saint-Genèse</span>
+        </figcaption>
+      </figure>
 
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════ IMAGE PLEINE LARGEUR — JARDIN ═══════════════════════ -->
-<section class="relative isolate overflow-hidden" aria-label="Aménagements extérieurs">
-  <figure class="media h-[68svh] min-h-[26rem] w-full lg:h-[86svh]">
-    <img
-      data-parallax="0.28"
-      src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=2400&q=80"
-      srcset="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1200&q=75 1200w,
-              https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=2400&q=80 2400w"
-      sizes="100vw"
-      alt="Jardin paysager parfaitement entretenu, pelouse tondue et massifs taillés"
-      loading="lazy" decoding="async">
-    <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/25 to-ink-950/55"></div>
-  </figure>
+<!-- ═══════════════════════ IMAGE PLEINE LARGEUR ÉPINGLÉE — JARDIN ═══════════════════════ -->
+<section class="relative h-[165svh]" aria-label="Aménagements extérieurs">
+  <div class="sticky top-0 h-[100svh] overflow-hidden">
+    <figure class="media absolute inset-0 h-full w-full">
+      <img
+        src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
+        srcset="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&amp;fit=crop&amp;w=1100&amp;q=75 1100w,
+                https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&amp;fit=crop&amp;w=2000&amp;q=80 2000w"
+        sizes="100vw"
+        alt="Jardin paysager parfaitement entretenu, pelouse tondue et massifs taillés"
+        loading="lazy" decoding="async">
+      <div class="absolute inset-0 bg-ink-950/55"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-ink-950/70"></div>
+    </figure>
 
-  <div class="absolute inset-0 flex items-end">
-    <div class="shell w-full pb-14 sm:pb-20">
-      <div class="max-w-3xl" data-reveal>
-        <p class="eyebrow">Extérieurs</p>
-        <p class="display mt-7 text-[clamp(1.8rem,4vw,3.25rem)] text-white">
-          La rénovation ne s’arrête pas<br class="hidden sm:block"> à la façade.
+    <div class="relative flex h-full items-center justify-center">
+      <div class="shell text-center" data-reveal>
+        <p class="eyebrow justify-center">Extérieurs</p>
+        <p class="display mx-auto mt-8 max-w-4xl text-[clamp(1.9rem,4.6vw,3.5rem)] text-white">
+          La rénovation ne s’arrête pas à la façade.
         </p>
-        <p class="lede mt-6 max-w-lg">
+        <p class="lede mx-auto mt-7 max-w-lg">
           Terrasses, allées, clôtures et jardins dessinés dans la continuité du bâti.
           Un même vocabulaire de matières, de la toiture jusqu’à la haie.
         </p>
-        <a href="services.html#exterieurs" class="link-quiet mt-8">
+        <a href="services.html#exterieurs" class="link-quiet mt-9">
           Découvrir nos aménagements extérieurs
           <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -237,8 +260,141 @@
   </div>
 </section>
 
-<!-- ═══════════════════════ MÉTIERS ═══════════════════════ -->
-<section class="py-28 sm:py-36">
+<!-- ═══════════════════════ CONVERSION — ÉLIGIBILITÉ ═══════════════════════ -->
+<section class="py-28 sm:py-40" id="eligibilite">
+  <div class="shell">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow justify-center">Test d’éligibilité</p>
+      <h2 class="display mt-8 text-[clamp(2.1rem,4.6vw,3.75rem)] text-white">
+        Votre projet,<br>estimé en 30 secondes.
+      </h2>
+      <p class="lede mx-auto mt-8 max-w-lg">
+        Trois questions suffisent pour obtenir une fourchette budgétaire indicative,
+        un délai réaliste et le taux de TVA applicable à votre bien.
+      </p>
+    </div>
+
+    <div class="panel mx-auto mt-16 max-w-3xl p-7 sm:p-12" data-reveal data-wizard>
+      <div class="flex items-center justify-between gap-6">
+        <span class="text-xs uppercase tracking-[0.22em] text-silver-500" data-step-counter>Étape 1 / 3</span>
+        <button type="button" class="link-quiet text-xs" data-wizard-back hidden>
+          <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 rotate-180" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          Retour
+        </button>
+      </div>
+      <div class="progress-track mt-5"><div class="progress-bar" data-progress></div></div>
+
+      <!-- Étape 1 -->
+      <div class="step is-active pt-10" data-step="1">
+        <h3 class="text-xl font-light tracking-tight text-white">Quel type de bien souhaitez-vous rénover&nbsp;?</h3>
+        <div class="mt-7 grid gap-3 sm:grid-cols-2">
+          <button type="button" class="opt" data-answer="bien" data-value="maison" data-label-bien="maison" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Maison unifamiliale
+          </button>
+          <button type="button" class="opt" data-answer="bien" data-value="appartement" data-label-bien="appartement" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Appartement
+          </button>
+          <button type="button" class="opt" data-answer="bien" data-value="immeuble" data-label-bien="immeuble" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Immeuble à appartements
+          </button>
+          <button type="button" class="opt" data-answer="bien" data-value="commerce" data-label-bien="commerce" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Local commercial
+          </button>
+        </div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="step pt-10" data-step="2">
+        <h3 class="text-xl font-light tracking-tight text-white">De quand date la construction&nbsp;?</h3>
+        <div class="mt-7 grid gap-3">
+          <button type="button" class="opt" data-answer="age" data-value="avant-1945" data-label-age="avant-1945" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Avant 1945
+          </button>
+          <button type="button" class="opt" data-answer="age" data-value="1945-1990" data-label-age="1945-1990" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Entre 1945 et 1990
+          </button>
+          <button type="button" class="opt" data-answer="age" data-value="apres-1990" data-label-age="apres-1990" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Après 1990
+          </button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="step pt-10" data-step="3">
+        <h3 class="text-xl font-light tracking-tight text-white">Quel poste souhaitez-vous traiter en priorité&nbsp;?</h3>
+        <div class="mt-7 grid gap-3 sm:grid-cols-2">
+          <button type="button" class="opt" data-answer="projet" data-value="toiture" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Toiture &amp; zinguerie
+          </button>
+          <button type="button" class="opt" data-answer="projet" data-value="facade" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Façade &amp; isolation
+          </button>
+          <button type="button" class="opt" data-answer="projet" data-value="jardin" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Extérieurs &amp; jardin
+          </button>
+          <button type="button" class="opt" data-answer="projet" data-value="interieur" aria-pressed="false">
+            <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
+            Rénovation intérieure
+          </button>
+        </div>
+      </div>
+
+      <!-- Résultat -->
+      <div class="step pt-10" data-step="result">
+        <p class="chip"><span class="dot-live"></span> Estimation indicative</p>
+        <h3 class="mt-6 text-xl font-light tracking-tight text-white" data-result-scope>Rénovation</h3>
+        <p class="mt-1 text-sm font-light text-silver-500" data-result-summary></p>
+
+        <p class="display mt-7 text-[clamp(1.9rem,4.5vw,3rem)] text-white" data-result-range>—</p>
+
+        <dl class="mt-9 grid gap-5 sm:grid-cols-2">
+          <div class="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+            <dt class="text-[0.68rem] uppercase tracking-[0.2em] text-silver-500">Durée estimée</dt>
+            <dd class="mt-2 text-base font-light text-white" data-result-duration>—</dd>
+          </div>
+          <div class="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+            <dt class="text-[0.68rem] uppercase tracking-[0.2em] text-silver-500">Fiscalité</dt>
+            <dd class="mt-2 text-base font-light text-sage-300" data-result-tva>—</dd>
+          </div>
+        </dl>
+
+        <p class="mt-6 text-sm font-light leading-relaxed text-silver-500" data-result-tva-note></p>
+
+        <div class="mt-9 flex flex-wrap items-center gap-4">
+          <a href="contact.html#devis" class="btn btn-primary">
+            Demander un devis gratuit
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <button type="button" class="link-quiet" data-wizard-restart>Recommencer le test</button>
+        </div>
+
+        <p class="mt-8 text-xs font-light leading-relaxed text-silver-600">
+          Fourchette indicative basée sur nos chantiers 2024-2025, hors situations
+          particulières (accessibilité, amiante, classement patrimonial). Seul le
+          devis établi après visite technique fait foi.
+        </p>
+      </div>
+    </div>
+
+    <p class="mx-auto mt-8 flex max-w-3xl items-center justify-center gap-3 text-sm font-light text-silver-500" data-reveal>
+      <svg viewBox="0 0 24 24" class="h-4 w-4 flex-none text-sage-400" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2.5"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"/></svg>
+      Aucune donnée n’est transmise : le calcul se fait dans votre navigateur.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MÉTIERS — LISTE ÉDITORIALE ═══════════════════════ -->
+<section class="border-t border-white/5 py-28 sm:py-36">
   <div class="shell">
     <div class="flex flex-wrap items-end justify-between gap-8" data-reveal>
       <div class="max-w-xl">
@@ -253,248 +409,119 @@
       </a>
     </div>
 
-    <div class="mt-16 grid gap-5 sm:grid-cols-2" data-reveal-stagger="120">
+    <div class="mt-16 grid gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+      <ol class="svc-list" data-svc-list>
+        <li>
+          <a class="svc-row group" href="services.html#toiture" data-svc="0">
+            <span class="svc-num">01</span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[clamp(1.5rem,3vw,2.15rem)] font-light tracking-tight text-white">Toiture &amp; zinguerie</span>
+              <span class="lede mt-3 block max-w-md text-[0.95rem]">Tuile, ardoise, zinc à joint debout, toiture plate. Isolation Sarking, corniches et récupération d’eau.</span>
+            </span>
+            <span class="svc-arrow"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </li>
 
-      <a href="services.html#toiture" class="panel group relative block overflow-hidden" data-reveal>
-        <figure class="media media-zoom aspect-[4/3] w-full">
-          <img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?auto=format&fit=crop&w=1200&q=80" alt="Couvreur posant des tuiles sur une toiture en pente" loading="lazy" decoding="async">
-          <div class="scrim-card absolute inset-0"></div>
-        </figure>
-        <div class="absolute inset-x-0 bottom-0 p-8">
-          <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">01</p>
-          <h3 class="mt-3 text-2xl font-light tracking-tight text-white">Toiture &amp; zinguerie</h3>
-          <p class="lede mt-3 max-w-sm text-sm">Tuile, ardoise, zinc à joint debout, toiture plate. Isolation Sarking et récupération d’eau.</p>
+        <li>
+          <a class="svc-row group" href="services.html#facade" data-svc="1">
+            <span class="svc-num">02</span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[clamp(1.5rem,3vw,2.15rem)] font-light tracking-tight text-white">Façade &amp; isolation</span>
+              <span class="lede mt-3 block max-w-md text-[0.95rem]">Isolation par l’extérieur certifiée, enduit minéral, bardage bois ou fibre-ciment, rejointoiement.</span>
+            </span>
+            <span class="svc-arrow"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </li>
+
+        <li>
+          <a class="svc-row group" href="services.html#exterieurs" data-svc="2">
+            <span class="svc-num">03</span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[clamp(1.5rem,3vw,2.15rem)] font-light tracking-tight text-white">Extérieurs &amp; jardins</span>
+              <span class="lede mt-3 block max-w-md text-[0.95rem]">Terrasses, allées drainantes, clôtures, éclairage paysager et plantations pérennes.</span>
+            </span>
+            <span class="svc-arrow"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </li>
+
+        <li>
+          <a class="svc-row group" href="services.html#interieur" data-svc="3">
+            <span class="svc-num">04</span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[clamp(1.5rem,3vw,2.15rem)] font-light tracking-tight text-white">Rénovation intérieure</span>
+              <span class="lede mt-3 block max-w-md text-[0.95rem]">Réagencement complet, menuiseries sur mesure, cuisines et salles de bains clés en main.</span>
+            </span>
+            <span class="svc-arrow"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </li>
+
+      </ol>
+
+      <div class="relative hidden lg:block" aria-hidden="true">
+        <div class="sticky top-28 aspect-[4/5] w-full">
+          <figure class="media svc-img absolute inset-0 rounded-2xl is-active" data-svc-img="0">
+            <img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Couvreur posant des tuiles sur une toiture en pente" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="media svc-img absolute inset-0 rounded-2xl" data-svc-img="1">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Façade contemporaine en briques claires et grandes baies vitrées" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="media svc-img absolute inset-0 rounded-2xl" data-svc-img="2">
+            <img src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Terrasse en bois bordée d’un jardin taillé" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="media svc-img absolute inset-0 rounded-2xl" data-svc-img="3">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1100&amp;q=80" alt="Séjour rénové aux finitions claires et parquet chêne" loading="lazy" decoding="async">
+          </figure>
+
         </div>
-      </a>
-
-      <a href="services.html#facade" class="panel group relative block overflow-hidden" data-reveal>
-        <figure class="media media-zoom aspect-[4/3] w-full">
-          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" alt="Façade contemporaine en briques claires et grandes baies vitrées" loading="lazy" decoding="async">
-          <div class="scrim-card absolute inset-0"></div>
-        </figure>
-        <div class="absolute inset-x-0 bottom-0 p-8">
-          <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">02</p>
-          <h3 class="mt-3 text-2xl font-light tracking-tight text-white">Façade &amp; isolation</h3>
-          <p class="lede mt-3 max-w-sm text-sm">Isolation par l’extérieur, enduit minéral, bardage bois ou fibre-ciment, rejointoiement.</p>
-        </div>
-      </a>
-
-      <a href="services.html#exterieurs" class="panel group relative block overflow-hidden" data-reveal>
-        <figure class="media media-zoom aspect-[4/3] w-full">
-          <img src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1200&q=80" alt="Terrasse en bois bordée d’un jardin taillé" loading="lazy" decoding="async">
-          <div class="scrim-card absolute inset-0"></div>
-        </figure>
-        <div class="absolute inset-x-0 bottom-0 p-8">
-          <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">03</p>
-          <h3 class="mt-3 text-2xl font-light tracking-tight text-white">Extérieurs &amp; jardins</h3>
-          <p class="lede mt-3 max-w-sm text-sm">Terrasses, allées drainantes, clôtures, éclairage paysager et plantations pérennes.</p>
-        </div>
-      </a>
-
-      <a href="services.html#interieur" class="panel group relative block overflow-hidden" data-reveal>
-        <figure class="media media-zoom aspect-[4/3] w-full">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Séjour rénové aux finitions claires et parquet chêne" loading="lazy" decoding="async">
-          <div class="scrim-card absolute inset-0"></div>
-        </figure>
-        <div class="absolute inset-x-0 bottom-0 p-8">
-          <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">04</p>
-          <h3 class="mt-3 text-2xl font-light tracking-tight text-white">Rénovation intérieure</h3>
-          <p class="lede mt-3 max-w-sm text-sm">Réagencement complet, menuiseries sur mesure, cuisines et salles de bains clés en main.</p>
-        </div>
-      </a>
-
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════ MÉTHODE ═══════════════════════ -->
-<section class="border-y border-white/5 bg-ink-950/40 py-28 sm:py-32">
-  <div class="shell">
-    <div class="max-w-2xl" data-reveal>
+<section class="border-t border-white/5 py-28 sm:py-36">
+  <div class="shell grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal="left">
       <p class="eyebrow">La méthode Haumont</p>
-      <h2 class="display mt-7 text-[clamp(2.1rem,4.6vw,3.5rem)] text-white">Quatre étapes, zéro surprise.</h2>
+      <h2 class="display mt-7 text-[clamp(2rem,4.2vw,3.25rem)] text-white">Quatre étapes,<br>zéro surprise.</h2>
+      <p class="lede mt-7 max-w-sm">
+        Le même déroulé sur chaque chantier, de la corniche isolée à la rénovation lourde.
+      </p>
     </div>
 
-    <ol class="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4" data-reveal-stagger="110">
-      <li data-reveal>
-        <div class="rule mb-7"></div>
-        <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">Étape 01</p>
-        <h3 class="mt-4 text-lg font-normal text-white">Visite technique</h3>
-        <p class="lede mt-3 text-sm">Relevé sur place, drone si nécessaire, diagnostic écrit. Gratuit et sans engagement.</p>
+    <ol data-reveal-stagger="100">
+      <li class="grid gap-5 border-t border-white/5 py-10 sm:grid-cols-[5rem_1fr] sm:gap-10" data-reveal>
+        <p class="display text-3xl text-sage-300">01</p>
+        <div>
+          <h3 class="text-lg font-normal text-white">Visite technique</h3>
+          <p class="lede mt-3 max-w-lg text-[0.95rem]">Relevé sur place, drone si nécessaire, diagnostic écrit. Gratuit et sans engagement.</p>
+        </div>
       </li>
-      <li data-reveal>
-        <div class="rule mb-7"></div>
-        <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">Étape 02</p>
-        <h3 class="mt-4 text-lg font-normal text-white">Devis détaillé</h3>
-        <p class="lede mt-3 text-sm">Chiffrage poste par poste sous 5 jours, avec variantes de matériaux et planning ferme.</p>
+      <li class="grid gap-5 border-t border-white/5 py-10 sm:grid-cols-[5rem_1fr] sm:gap-10" data-reveal>
+        <p class="display text-3xl text-sage-300">02</p>
+        <div>
+          <h3 class="text-lg font-normal text-white">Devis détaillé</h3>
+          <p class="lede mt-3 max-w-lg text-[0.95rem]">Chiffrage poste par poste sous 5 jours, avec variantes de matériaux et planning ferme.</p>
+        </div>
       </li>
-      <li data-reveal>
-        <div class="rule mb-7"></div>
-        <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">Étape 03</p>
-        <h3 class="mt-4 text-lg font-normal text-white">Chantier propre</h3>
-        <p class="lede mt-3 text-sm">Protection des abords, nettoyage quotidien, rapport photo chaque vendredi.</p>
+      <li class="grid gap-5 border-t border-white/5 py-10 sm:grid-cols-[5rem_1fr] sm:gap-10" data-reveal>
+        <p class="display text-3xl text-sage-300">03</p>
+        <div>
+          <h3 class="text-lg font-normal text-white">Chantier propre</h3>
+          <p class="lede mt-3 max-w-lg text-[0.95rem]">Protection des abords, nettoyage quotidien, rapport photo chaque vendredi.</p>
+        </div>
       </li>
-      <li data-reveal>
-        <div class="rule mb-7"></div>
-        <p class="text-[0.68rem] uppercase tracking-[0.24em] text-sage-300">Étape 04</p>
-        <h3 class="mt-4 text-lg font-normal text-white">Réception &amp; suivi</h3>
-        <p class="lede mt-3 text-sm">PV de réception, dossier photo, garanties remises en main propre. Contrôle à 12 mois.</p>
+      <li class="grid gap-5 border-y border-white/5 py-10 sm:grid-cols-[5rem_1fr] sm:gap-10" data-reveal>
+        <p class="display text-3xl text-sage-300">04</p>
+        <div>
+          <h3 class="text-lg font-normal text-white">Réception &amp; suivi</h3>
+          <p class="lede mt-3 max-w-lg text-[0.95rem]">PV de réception, dossier photo, garanties remises en main propre. Contrôle à 12 mois.</p>
+        </div>
       </li>
     </ol>
-  </div>
-</section>
-
-<!-- ═══════════════════════ TÉMOIGNAGE ═══════════════════════ -->
-<section class="py-28 sm:py-36">
-  <div class="shell">
-    <figure class="mx-auto max-w-3xl text-center" data-reveal>
-      <svg viewBox="0 0 24 24" class="mx-auto h-7 w-7 text-sage-400" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
-        <path d="M9.5 6C6.9 7.4 5.5 9.8 5.5 13v5h6v-6H8.4c.2-2 1.1-3.4 2.8-4.3zM19.5 6C16.9 7.4 15.5 9.8 15.5 13v5h6v-6h-3.1c.2-2 1.1-3.4 2.8-4.3z"/>
-      </svg>
-      <blockquote class="display mt-9 text-[clamp(1.4rem,3vw,2.35rem)] leading-[1.25] text-white">
-        « Toiture, façade et jardin repris en une seule opération, dans les délais
-        annoncés au jour près. Trois ans plus tard, pas une reprise à signaler. »
-      </blockquote>
-      <figcaption class="mt-9 text-sm font-light text-silver-500">
-        Christine &amp; Marc D. — <span class="text-silver-400">maison de maître, Rhode-Saint-Genèse</span>
-      </figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ═══════════════════════ CONVERSION — ÉLIGIBILITÉ ═══════════════════════ -->
-<section class="pb-32 pt-4 sm:pb-40" id="eligibilite">
-  <div class="shell">
-    <div class="grid items-start gap-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
-
-      <div class="lg:sticky lg:top-28" data-reveal="left">
-        <p class="eyebrow">Test d’éligibilité</p>
-        <h2 class="display mt-7 text-[clamp(2.1rem,4.4vw,3.5rem)] text-white">
-          Votre projet,<br>estimé en 30 secondes.
-        </h2>
-        <p class="lede mt-7 max-w-md">
-          Trois questions suffisent pour obtenir une fourchette budgétaire indicative,
-          un délai réaliste et le taux de TVA applicable à votre bien.
-        </p>
-        <p class="mt-8 flex items-start gap-3 text-sm font-light text-silver-500">
-          <svg viewBox="0 0 24 24" class="mt-0.5 h-4 w-4 flex-none text-sage-400" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2.5"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"/></svg>
-          Aucune donnée n’est transmise : le calcul se fait dans votre navigateur.
-        </p>
-      </div>
-
-      <div class="panel p-7 sm:p-11" data-reveal data-wizard>
-        <div class="flex items-center justify-between gap-6">
-          <span class="text-xs uppercase tracking-[0.22em] text-silver-500" data-step-counter>Étape 1 / 3</span>
-          <button type="button" class="link-quiet text-xs" data-wizard-back hidden>
-            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 rotate-180" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            Retour
-          </button>
-        </div>
-        <div class="progress-track mt-5"><div class="progress-bar" data-progress></div></div>
-
-        <!-- Étape 1 -->
-        <div class="step is-active pt-10" data-step="1">
-          <h3 class="text-xl font-light tracking-tight text-white">Quel type de bien souhaitez-vous rénover&nbsp;?</h3>
-          <div class="mt-7 grid gap-3 sm:grid-cols-2">
-            <button type="button" class="opt" data-answer="bien" data-value="maison" data-label-bien="maison" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Maison unifamiliale
-            </button>
-            <button type="button" class="opt" data-answer="bien" data-value="appartement" data-label-bien="appartement" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Appartement
-            </button>
-            <button type="button" class="opt" data-answer="bien" data-value="immeuble" data-label-bien="immeuble" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Immeuble à appartements
-            </button>
-            <button type="button" class="opt" data-answer="bien" data-value="commerce" data-label-bien="commerce" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Local commercial
-            </button>
-          </div>
-        </div>
-
-        <!-- Étape 2 -->
-        <div class="step pt-10" data-step="2">
-          <h3 class="text-xl font-light tracking-tight text-white">De quand date la construction&nbsp;?</h3>
-          <div class="mt-7 grid gap-3">
-            <button type="button" class="opt" data-answer="age" data-value="avant-1945" data-label-age="avant-1945" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Avant 1945
-            </button>
-            <button type="button" class="opt" data-answer="age" data-value="1945-1990" data-label-age="1945-1990" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Entre 1945 et 1990
-            </button>
-            <button type="button" class="opt" data-answer="age" data-value="apres-1990" data-label-age="apres-1990" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Après 1990
-            </button>
-          </div>
-        </div>
-
-        <!-- Étape 3 -->
-        <div class="step pt-10" data-step="3">
-          <h3 class="text-xl font-light tracking-tight text-white">Quel poste souhaitez-vous traiter en priorité&nbsp;?</h3>
-          <div class="mt-7 grid gap-3 sm:grid-cols-2">
-            <button type="button" class="opt" data-answer="projet" data-value="toiture" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Toiture &amp; zinguerie
-            </button>
-            <button type="button" class="opt" data-answer="projet" data-value="facade" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Façade &amp; isolation
-            </button>
-            <button type="button" class="opt" data-answer="projet" data-value="jardin" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Extérieurs &amp; jardin
-            </button>
-            <button type="button" class="opt" data-answer="projet" data-value="interieur" aria-pressed="false">
-              <span class="opt-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg></span>
-              Rénovation intérieure
-            </button>
-          </div>
-        </div>
-
-        <!-- Résultat -->
-        <div class="step pt-10" data-step="result">
-          <p class="chip"><span class="dot-live"></span> Estimation indicative</p>
-          <h3 class="mt-6 text-xl font-light tracking-tight text-white" data-result-scope>Rénovation</h3>
-          <p class="mt-1 text-sm font-light text-silver-500" data-result-summary></p>
-
-          <p class="display mt-7 text-[clamp(1.9rem,4.5vw,3rem)] text-white" data-result-range>—</p>
-
-          <dl class="mt-9 grid gap-5 sm:grid-cols-2">
-            <div class="rounded-xl border border-white/5 bg-white/[0.02] p-5">
-              <dt class="text-[0.68rem] uppercase tracking-[0.2em] text-silver-500">Durée estimée</dt>
-              <dd class="mt-2 text-base font-light text-white" data-result-duration>—</dd>
-            </div>
-            <div class="rounded-xl border border-white/5 bg-white/[0.02] p-5">
-              <dt class="text-[0.68rem] uppercase tracking-[0.2em] text-silver-500">Fiscalité</dt>
-              <dd class="mt-2 text-base font-light text-sage-300" data-result-tva>—</dd>
-            </div>
-          </dl>
-
-          <p class="mt-6 text-sm font-light leading-relaxed text-silver-500" data-result-tva-note></p>
-
-          <div class="mt-9 flex flex-wrap items-center gap-4">
-            <a href="contact.html#devis" class="btn btn-primary">
-              Demander un devis gratuit
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-            <button type="button" class="link-quiet" data-wizard-restart>Recommencer le test</button>
-          </div>
-
-          <p class="mt-8 text-xs font-light leading-relaxed text-silver-600">
-            Fourchette indicative basée sur nos chantiers 2024-2025, hors situations
-            particulières (accessibilité, amiante, classement patrimonial). Seul le
-            devis établi après visite technique fait foi.
-          </p>
-        </div>
-      </div>
-
-    </div>
   </div>
 </section>
 
