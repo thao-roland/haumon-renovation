@@ -1,0 +1,9 @@
+/* Tailwind entry point.
+   Build:  npm run build:css   →   assets/css/site.css
+   The authored design system sits between Tailwind's components and
+   utilities so utility classes always win a specificity tie. */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import './main.css';
+@import 'tailwindcss/utilities';

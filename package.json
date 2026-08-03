@@ -1,0 +1,14 @@
+{
+  "name": "haumont-renovation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site vitrine multi-pages de Haumont Rénovation SRL — HTML5, Tailwind CSS, JavaScript natif.",
+  "scripts": {
+    "build": "tailwindcss -i assets/css/src.css -o assets/css/site.css --minify",
+    "dev": "tailwindcss -i assets/css/src.css -o assets/css/site.css --watch",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
