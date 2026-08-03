@@ -63,11 +63,12 @@ et la plaque dégradée reste — aucune icône d'image cassée n'apparaît jama
 npm install        # tailwindcss (seule dépendance, en devDependency)
 npm run dev        # recompile assets/css/site.css à chaque modification
 npm run serve      # http://localhost:8000
-npm run build      # build minifié avant publication
+npm run build      # produit dist/ (build de production)
+npm run preview    # http://localhost:8001 — sert dist/
 ```
 
-`assets/css/site.css` est **versionné** : le site se publie tel quel sur n'importe quel
-hébergement statique, sans étape de build.
+`assets/css/site.css` est **versionné** : le site s'ouvre et se publie tel quel, sans
+étape de build. `npm run build` sert au déploiement (voir ci-dessous).
 
 ### Structure
 
@@ -80,12 +81,47 @@ assets/
     site.css     ← feuille compilée, référencée par les pages
   js/
     main.js
+scripts/build.mjs   ← génère dist/
 tailwind.config.js
+vercel.json
 ```
 
 L'ordre d'import dans `src.css` place `main.css` entre les composants et les
 utilitaires Tailwind : à spécificité égale, une classe utilitaire l'emporte toujours
 sur une classe du design system.
+
+## Déploiement (Vercel)
+
+`npm run build` génère `dist/` avec **uniquement** ce qui doit être servi : les cinq
+pages, `main.js` et la feuille Tailwind compilée. Les sources (`main.css`, `src.css`,
+`tailwind.config.js`, `node_modules`, ce README) restent hors du dossier publié.
+
+`vercel.json` est déjà configuré : `buildCommand`, `outputDirectory: dist`, en-têtes de
+sécurité et cache des assets.
+
+### Option A — import depuis GitHub (recommandé)
+
+1. [vercel.com/new](https://vercel.com/new) → **Import Git Repository** → `thao-roland/haumon-renovation`
+2. Vercel lit `vercel.json` : ne rien changer dans « Build & Output Settings ».
+3. **Settings → Git → Production Branch** : choisir la branche à publier
+   (le dépôt n'a pour l'instant que `claude/haumont-renovation-website-mw0g24` ;
+   sinon, fusionner d'abord cette branche dans `main`).
+4. **Deploy**.
+
+### Option B — en ligne de commande
+
+```bash
+npx vercel login
+npx vercel        # préproduction
+npx vercel --prod # production
+```
+
+### URL propres (optionnel)
+
+Les liens internes pointent vers `services.html`, `contact.html`… — le site reste donc
+ouvrable directement depuis le disque. Pour des URL sans extension (`/services`),
+ajouter `"cleanUrls": true` dans `vercel.json` **et** retirer les `.html` des liens
+internes des cinq pages.
 
 ## À brancher avant mise en ligne
 
