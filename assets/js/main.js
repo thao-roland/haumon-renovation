@@ -240,35 +240,6 @@
   }
 
   /* ------------------------------------------------------------------
-     Editorial service list — the sticky panel follows the hovered row.
-     ------------------------------------------------------------------ */
-  function initServiceList() {
-    var list = $('[data-svc-list]');
-    if (!list) return;
-
-    var rows = $$('[data-svc]', list);
-    var panels = $$('[data-svc-img]');
-    if (!rows.length || !panels.length) return;
-
-    var activate = function (index) {
-      rows.forEach(function (row) {
-        row.classList.toggle('is-active', row.getAttribute('data-svc') === index);
-      });
-      panels.forEach(function (panel) {
-        panel.classList.toggle('is-active', panel.getAttribute('data-svc-img') === index);
-      });
-    };
-
-    rows.forEach(function (row) {
-      var index = row.getAttribute('data-svc');
-      row.addEventListener('mouseenter', function () { activate(index); });
-      row.addEventListener('focus', function () { activate(index); });
-    });
-
-    activate(rows[0].getAttribute('data-svc'));
-  }
-
-  /* ------------------------------------------------------------------
      Eligibility wizard — 3 questions, then an indicative estimate.
      Purely client-side; no data leaves the page.
      ------------------------------------------------------------------ */
@@ -559,7 +530,6 @@
     initParallax();
     initAccordion();
     initFilters();
-    initServiceList();
     initWizard();
     initQuoteHandoff();
     initForms();

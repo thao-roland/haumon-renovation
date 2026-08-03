@@ -168,10 +168,6 @@ img {
   text-transform: uppercase;
   color: var(--silver-dim);
 }
-.eyebrow.justify-center {
-  display: flex;
-}
-
 .eyebrow::before {
   content: '';
   width: 1.75rem;
@@ -569,90 +565,6 @@ img {
   0% { box-shadow: 0 0 0 0 rgba(155, 180, 139, 0.55); }
   70% { box-shadow: 0 0 0 9px rgba(155, 180, 139, 0); }
   100% { box-shadow: 0 0 0 0 rgba(155, 180, 139, 0); }
-}
-
-/* --------------------------------------------------------------------------
-   Liste éditoriale des métiers — le panneau collant suit la ligne survolée.
-   -------------------------------------------------------------------------- */
-
-.svc-list {
-  border-top: 1px solid var(--hairline);
-}
-
-.svc-row {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 2.25rem 0.25rem 2.25rem 0;
-  border-bottom: 1px solid var(--hairline);
-  text-decoration: none;
-  transition: padding-left 0.55s var(--ease);
-}
-
-/* Filet sage qui se déploie sous la ligne active. */
-.svc-row::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  height: 1px;
-  width: 100%;
-  background: var(--sage);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.6s var(--ease);
-}
-
-.svc-row:hover,
-.svc-row.is-active {
-  padding-left: 1rem;
-}
-
-.svc-row:hover::after,
-.svc-row.is-active::after {
-  transform: scaleX(1);
-}
-
-.svc-num {
-  flex: none;
-  padding-top: 0.55rem;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: var(--silver-dim);
-  transition: color 0.5s var(--ease);
-}
-
-.svc-row:hover .svc-num,
-.svc-row.is-active .svc-num {
-  color: var(--sage-bright);
-}
-
-.svc-arrow {
-  flex: none;
-  align-self: center;
-  color: var(--silver-dim);
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), color 0.5s var(--ease);
-}
-
-.svc-row:hover .svc-arrow,
-.svc-row.is-active .svc-arrow {
-  color: var(--sage-bright);
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.svc-img {
-  opacity: 0;
-  transition: opacity 0.75s var(--ease);
-  pointer-events: none;
-}
-
-.svc-img.is-active {
-  opacity: 1;
 }
 
 /* --------------------------------------------------------------------------

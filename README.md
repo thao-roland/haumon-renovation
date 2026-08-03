@@ -22,7 +22,7 @@ Les icônes sont des SVG tracés à la main, `stroke-width: 1`, sans remplissage
 
 | Fichier | Contenu |
 |---|---|
-| `index.html` | Hero scindé (typographie à gauche, photo de toiture à droite), ticker des garanties, **bento asymétrique** (3 engagements + tuile chiffres + tuile citation), **bande photo pleine largeur épinglée** (jardin), **test d'éligibilité** remonté juste après, métiers en liste éditoriale à panneau collant, méthode en deux colonnes collantes |
+| `index.html` | Hero plein écran (toiture), chiffres clés animés, **bento 3 colonnes** des trois engagements, **bande photo pleine largeur** (jardin) en parallaxe, métiers, méthode en 4 étapes, témoignage, **test d'éligibilité** interactif |
 | `services.html` | Les quatre métiers en détail (ancres `#toiture`, `#facade`, `#exterieurs`, `#interieur`), bandeau de marques défilant, FAQ en accordéon |
 | `realisations.html` | Galerie de 9 chantiers filtrable par métier, statistiques, témoignages |
 | `entreprise.html` | Histoire, principes, chronologie 2006 → 2025, garanties et assurances |
@@ -34,9 +34,7 @@ Modules indépendants, chacun inactif si son point d'ancrage est absent de la pa
 
 - **Révélations au défilement** — `IntersectionObserver`, cascade réglée par `data-reveal-stagger`
 - **Compteurs** — animation `easeOutExpo` déclenchée à 50 % de visibilité
-- **Liste éditoriale des métiers** — le panneau collant suit la ligne survolée ou
-  focalisée au clavier ; masqué sous `lg`, où les lignes se suffisent à elles-mêmes
-- **Parallaxe** — dérive verticale disponible via `data-parallax`, limitée par `requestAnimationFrame`
+- **Parallaxe** — dérive verticale de la photo de jardin, limitée par `requestAnimationFrame`
 - **Navigation** — état givré au défilement, panneau mobile, fermeture à `Échap`
 - **Test d'éligibilité** — 3 questions → fourchette budgétaire, durée et taux de TVA
   (6 % au-delà de 10 ans, 21 % en deçà). Le calcul reste dans le navigateur ; le
