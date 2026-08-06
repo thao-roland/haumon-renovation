@@ -15,8 +15,22 @@
   /* ------------------------------------------------------------------
      Images — fade in when decoded, fall back to the gradient plate.
      ------------------------------------------------------------------ */
+  function initLogo() {
+    $$('[data-logo]').forEach(function (img) {
+      var fail = function () { img.style.display = 'none'; };
+      if (img.complete) {
+        if (!img.naturalWidth) fail();
+        return;
+      }
+      img.addEventListener('error', fail, { once: true });
+    });
+  }
+
   function initMedia() {
     $$('.media img').forEach(function (img) {
+      // Une <img> sans source n'a rien échoué : elle attend la sienne.
+      if (!img.getAttribute('src')) return;
+
       var reveal = function () { img.classList.add('is-loaded'); };
       var fail = function () { img.classList.add('is-failed'); };
 
@@ -217,29 +231,49 @@
     var grid = $('[data-gallery-grid]');
     if (!grid) return;
 
-    var projets = (window.PROJETS || []).filter(function (p) {
-      return p && p.images && p.images.length;
-    });
-
-    var empty = $('[data-gallery-empty]');
-    var bar = $('[data-gallery-filters]');
-    var intro = $('[data-gallery-intro]');
-
-    if (!projets.length) {
-      if (empty) empty.hidden = false;
-      return;
-    }
-
-    if (empty) empty.hidden = true;
-    if (intro) intro.hidden = false;
-
     var esc = function (str) {
       return String(str == null ? '' : str)
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
     };
 
-    // ── Cartes ──────────────────────────────────────────────────────
+    var projets = (window.PROJETS || []).filter(function (p) {
+      return p && p.images && p.images.length;
+    });
+    var photos = (window.PHOTOS || []).filter(function (p) { return p && p.src; });
+
+    var empty = $('[data-gallery-empty]');
+    var bar = $('[data-gallery-filters]');
+
+    // Aucun contenu : la page garde son message d'attente.
+    if (!projets.length && !photos.length) {
+      if (empty) empty.hidden = false;
+      return;
+    }
+    if (empty) empty.hidden = true;
+
+    // ── Mode mosaïque : des photos, sans chantier détaillé ──────────
+    if (!projets.length) {
+      grid.className = 'grid grid-cols-2 gap-4 md:grid-cols-3';
+      grid.innerHTML = photos.map(function (photo, i) {
+        return '' +
+          '<button type="button" class="panel group block overflow-hidden p-0" data-open-projet="0" data-open-photo="' + i + '" ' +
+              'aria-label="Agrandir la photo ' + (i + 1) + '">' +
+            '<figure class="media media-zoom aspect-square w-full">' +
+              '<img src="' + esc(photo.src) + '" alt="' + esc(photo.alt || 'Chantier réalisé par Haumont Rénovation, photo ' + (i + 1)) + '" ' +
+                   'loading="lazy" decoding="async">' +
+            '</figure>' +
+          '</button>';
+      }).join('');
+
+      initMedia();
+      // La visionneuse traite la mosaïque comme un chantier unique.
+      initLightbox([{ titre: 'Chantiers', images: photos }], esc);
+      return;
+    }
+
+    // ── Mode chantiers détaillés ────────────────────────────────────
+    grid.className = 'grid gap-5 sm:grid-cols-2 lg:grid-cols-3';
     grid.innerHTML = projets.map(function (p, i) {
       var first = p.images[0];
       var label = METIERS[p.metier] || 'Chantier';
@@ -266,7 +300,6 @@
         '</article>';
     }).join('');
 
-    // ── Filtres : uniquement les métiers réellement présents ────────
     if (bar) {
       var presents = [];
       projets.forEach(function (p) {
@@ -330,9 +363,11 @@
 
     var paint = function () {
       var photo = projet.images[idx];
+      imgEl.classList.remove('is-failed');
+      imgEl.classList.add('is-loaded');
       imgEl.src = photo.src;
       imgEl.alt = photo.alt || projet.titre;
-      titleEl.textContent = projet.titre;
+      titleEl.textContent = projet.titre || '';
       capEl.textContent = [photo.legende, projet.lieu, projet.annee].filter(Boolean).join(' · ');
       countEl.textContent = (idx + 1) + ' / ' + projet.images.length;
       var solo = projet.images.length < 2;
@@ -340,10 +375,10 @@
       nextBtn.hidden = solo;
     };
 
-    var open = function (i, trigger) {
+    var open = function (i, trigger, startPhoto) {
       projet = projets[i];
       if (!projet) return;
-      idx = 0;
+      idx = startPhoto || 0;
       lastFocus = trigger || null;
       paint();
       box.hidden = false;
@@ -364,7 +399,8 @@
 
     $$('[data-open-projet]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        open(parseInt(btn.getAttribute('data-open-projet'), 10), btn);
+        open(parseInt(btn.getAttribute('data-open-projet'), 10), btn,
+             parseInt(btn.getAttribute('data-open-photo'), 10) || 0);
       });
     });
 
@@ -651,6 +687,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    initLogo();
     initMedia();
     initNav();
     initReveal();

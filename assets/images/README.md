@@ -3,7 +3,19 @@
 Déposez ici toutes les photos du site. Ce dossier est versionné : ce que vous
 poussez sur GitHub se retrouve en ligne au déploiement suivant.
 
-## Comment nommer les fichiers
+## Fichiers attendus par le site
+
+Le site référence déjà ces noms — il suffit de déposer les fichiers ici :
+
+| Fichier | Rôle |
+|---|---|
+| `logo-hau.png` | Logo : onglet du navigateur, en-tête, pied de page, aperçu au partage |
+| `100.jpg` … `112.jpg` | Les 13 photos de la mosaïque, page Réalisations |
+
+Tant qu'un fichier manque, le site ne casse pas : le logo laisse place au nom
+écrit, et une photo absente laisse sa plaque dégradée.
+
+## Comment nommer les fichiers suivants
 
 Un nom par chantier, en minuscules, sans accent ni espace :
 

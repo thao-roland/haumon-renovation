@@ -45,16 +45,23 @@ Modules indépendants, chacun inactif si son point d'ancrage est absent de la pa
 `prefers-reduced-motion` neutralise toutes les animations. Sans JavaScript, la page
 reste entièrement lisible : les révélations sont conditionnées par la classe `.js`.
 
-## Ajouter un chantier à la galerie
+## Galerie et logo
 
-1. Déposer les photos dans **`assets/images/`** (conventions dans le README de ce dossier).
-2. Ajouter une entrée dans **`assets/js/projets.js`** : titre, métier, lieu, année,
-   description et liste des photos.
+Tout se joue dans **`assets/images/`** (les fichiers) et **`assets/js/projets.js`**
+(ce qui est affiché). Le HTML n'est jamais à toucher.
 
-La grille, les filtres et la visionneuse se construisent à partir de cette liste —
-le HTML n'est jamais à toucher. Les filtres n'affichent que les métiers réellement
-présents, et n'apparaissent qu'à partir de deux métiers différents. Liste vide :
-la page montre un message d'attente plutôt qu'une grille vide.
+`projets.js` expose deux listes :
+
+- **`PHOTOS`** — une mosaïque de photos, sans autre information que le fichier.
+  C'est le mode actuel : 13 photos, visionneuse au clic.
+- **`PROJETS`** — des chantiers avec titre, métier, lieu, année et une série
+  avant / après / détail. Dès qu'une entrée y figure, elle remplace la mosaïque
+  par une grille filtrable par métier. Les filtres n'affichent que les métiers réellement présents et n'apparaissent qu'à
+partir de deux métiers différents. Les deux listes vides : la page montre un
+message d'attente plutôt qu'une grille vide.
+
+Le logo (`assets/images/logo-hau.png`) sert de favicon, d'en-tête, de pied de page
+et d'aperçu au partage. S'il est absent, le nom écrit prend seul le relais.
 
 `scripts/build.mjs` copie `assets/images/` dans `dist/`, en laissant le README du
 dossier hors du site publié.
