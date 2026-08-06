@@ -17,7 +17,12 @@
      ------------------------------------------------------------------ */
   function initLogo() {
     $$('[data-logo]').forEach(function (img) {
-      var fail = function () { img.style.display = 'none'; };
+      var fail = function () {
+        img.style.display = 'none';
+        // Le nom écrit prend le relais du logo absent.
+        var fallback = img.parentNode && img.parentNode.querySelector('.sr-only-fallback');
+        if (fallback) fallback.hidden = false;
+      };
       if (img.complete) {
         if (!img.naturalWidth) fail();
         return;
@@ -227,6 +232,46 @@
     plafonnage: 'Plafonnage & gyproc'
   };
 
+  function buildFilters(bar, grid, entries, esc) {
+    if (!bar) return;
+
+    var presents = [];
+    entries.forEach(function (e) {
+      if (e.metier && presents.indexOf(e.metier) === -1) presents.push(e.metier);
+    });
+
+    // Un seul métier : le filtre n'aurait rien à trier.
+    if (presents.length < 2) return;
+
+    bar.hidden = false;
+    bar.innerHTML = '<button type="button" class="opt w-auto justify-center px-5 py-2.5 text-sm" ' +
+        'data-filter="all" aria-pressed="true">Tout</button>' +
+      presents.map(function (m) {
+        return '<button type="button" class="opt w-auto justify-center px-5 py-2.5 text-sm" ' +
+          'data-filter="' + esc(m) + '" aria-pressed="false">' + esc(METIERS[m] || m) + '</button>';
+      }).join('');
+
+    var buttons = $$('[data-filter]', bar);
+    var cards = $$('[data-category]', grid);
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-filter');
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+        btn.setAttribute('aria-pressed', 'true');
+        cards.forEach(function (card) {
+          var match = key === 'all' || card.getAttribute('data-category') === key;
+          card.style.display = match ? '' : 'none';
+          if (match && !reduceMotion) {
+            card.style.animation = 'none';
+            void card.offsetWidth;
+            card.style.animation = 'stepIn 0.5s var(--ease) both';
+          }
+        });
+      });
+    });
+  }
+
   function initGallery() {
     var grid = $('[data-gallery-grid]');
     if (!grid) return;
@@ -257,18 +302,25 @@
       grid.className = 'grid grid-cols-2 gap-4 md:grid-cols-3';
       grid.innerHTML = photos.map(function (photo, i) {
         return '' +
-          '<button type="button" class="panel group block overflow-hidden p-0" data-open-projet="0" data-open-photo="' + i + '" ' +
-              'aria-label="Agrandir la photo ' + (i + 1) + '">' +
+          '<button type="button" class="panel group block overflow-hidden p-0" data-category="' + esc(photo.metier) + '" ' +
+              'data-open-projet="0" data-open-photo="' + i + '" ' +
+              'aria-label="Agrandir : ' + esc(photo.legende || 'photo ' + (i + 1)) + '">' +
             '<figure class="media media-zoom aspect-square w-full">' +
-              '<img src="' + esc(photo.src) + '" alt="' + esc(photo.alt || 'Chantier réalisé par Haumont Rénovation, photo ' + (i + 1)) + '" ' +
+              '<img src="' + esc(photo.src) + '" alt="' + esc(photo.alt || photo.legende || 'Chantier réalisé par Haumont Rénovation') + '" ' +
                    'loading="lazy" decoding="async">' +
+              '<div class="scrim-card absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>' +
+              (photo.legende
+                ? '<figcaption class="absolute inset-x-0 bottom-0 translate-y-2 p-5 text-left text-sm font-light text-white opacity-0 ' +
+                  'transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">' + esc(photo.legende) + '</figcaption>'
+                : '') +
             '</figure>' +
           '</button>';
       }).join('');
 
+      buildFilters(bar, grid, photos, esc);
       initMedia();
       // La visionneuse traite la mosaïque comme un chantier unique.
-      initLightbox([{ titre: 'Chantiers', images: photos }], esc);
+      initLightbox([{ titre: '', images: photos }], esc);
       return;
     }
 
@@ -300,42 +352,7 @@
         '</article>';
     }).join('');
 
-    if (bar) {
-      var presents = [];
-      projets.forEach(function (p) {
-        if (p.metier && presents.indexOf(p.metier) === -1) presents.push(p.metier);
-      });
-
-      if (presents.length > 1) {
-        bar.hidden = false;
-        bar.innerHTML = '<button type="button" class="opt w-auto justify-center px-5 py-2.5 text-sm" ' +
-            'data-filter="all" aria-pressed="true">Tout</button>' +
-          presents.map(function (m) {
-            return '<button type="button" class="opt w-auto justify-center px-5 py-2.5 text-sm" ' +
-              'data-filter="' + esc(m) + '" aria-pressed="false">' + esc(METIERS[m] || m) + '</button>';
-          }).join('');
-
-        var buttons = $$('[data-filter]', bar);
-        var cards = $$('[data-category]', grid);
-
-        buttons.forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            var key = btn.getAttribute('data-filter');
-            buttons.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-            btn.setAttribute('aria-pressed', 'true');
-            cards.forEach(function (card) {
-              var match = key === 'all' || card.getAttribute('data-category') === key;
-              card.style.display = match ? '' : 'none';
-              if (match && !reduceMotion) {
-                card.style.animation = 'none';
-                void card.offsetWidth;
-                card.style.animation = 'stepIn 0.5s var(--ease) both';
-              }
-            });
-          });
-        });
-      }
-    }
+    buildFilters(bar, grid, projets, esc);
 
     initReveal();
     initMedia();

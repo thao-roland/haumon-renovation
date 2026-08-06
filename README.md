@@ -60,8 +60,10 @@ Tout se joue dans **`assets/images/`** (les fichiers) et **`assets/js/projets.js
 partir de deux métiers différents. Les deux listes vides : la page montre un
 message d'attente plutôt qu'une grille vide.
 
-Le logo (`assets/images/logo-hau.png`) sert de favicon, d'en-tête, de pied de page
-et d'aperçu au partage. S'il est absent, le nom écrit prend seul le relais.
+Le logo sert de favicon, d'en-tête, de pied de page et d'aperçu au partage. Le site
+pointe sur `logo-haumont-web.png`, version détourée de `logo-hau.png` : le fichier
+d'origine porte un fond noir incrusté qui, sur le charcoal de la page, formait un
+rectangle plus sombre. S'il est absent, le nom écrit prend le relais.
 
 `scripts/build.mjs` copie `assets/images/` dans `dist/`, en laissant le README du
 dossier hors du site publié.

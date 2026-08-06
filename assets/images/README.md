@@ -9,7 +9,8 @@ Le site référence déjà ces noms — il suffit de déposer les fichiers ici :
 
 | Fichier | Rôle |
 |---|---|
-| `logo-hau.png` | Logo : onglet du navigateur, en-tête, pied de page, aperçu au partage |
+| `logo-hau.png` | Logo d'origine, tel que fourni. Conservé intact, non utilisé par le site. |
+| `logo-haumont-web.png` | Version détourée du précédent, utilisée par le site : onglet du navigateur, en-tête, pied de page, aperçu au partage. Le fond noir incrusté a été rendu transparent, sans quoi le logo formait un rectangle plus sombre que la page. À régénérer si le logo change. |
 | `100.jpg` … `112.jpg` | Les 13 photos de la mosaïque, page Réalisations |
 
 Tant qu'un fichier manque, le site ne casse pas : le logo laisse place au nom
