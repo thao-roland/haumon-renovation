@@ -243,17 +243,17 @@
      Eligibility wizard — 3 questions, then an indicative estimate.
      Purely client-side; no data leaves the page.
      ------------------------------------------------------------------ */
-  var ESTIMATES = {
-    toiture: { label: 'Rénovation de toiture', low: 9500, high: 24000, weeks: '2 à 4 semaines' },
-    facade: { label: 'Façade & isolation', low: 12000, high: 32000, weeks: '3 à 6 semaines' },
-    jardin: { label: 'Aménagement extérieur', low: 6500, high: 21000, weeks: '2 à 5 semaines' },
-    interieur: { label: 'Rénovation intérieure', low: 15000, high: 48000, weeks: '5 à 12 semaines' }
+  // Les cinq métiers proposés par le formulaire. Aucun montant n'est affiché :
+  // les prix relèvent du devis, pas d'une estimation automatique.
+  var TRAVAUX = {
+    carrelage: 'Carrelage & salle de bain',
+    maconnerie: 'Maçonnerie',
+    toiture: 'Toiture plate',
+    menuiserie: 'Menuiserie',
+    plafonnage: 'Plafonnage & gyproc'
   };
 
-  var PREMIUM_ADJUST = { maison: 1, appartement: 0.75, immeuble: 1.65, commerce: 1.3 };
-  var AGE_ADJUST = { 'avant-1945': 1.25, '1945-1990': 1.1, 'apres-1990': 1 };
-
-  var STORE_KEY = 'haumont:estimation';
+  var STORE_KEY = 'haumont:projet';
 
   function initWizard() {
     var wizard = $('[data-wizard]');
@@ -282,35 +282,25 @@
       if (backBtn) backBtn.hidden = index === 0 || index >= questionCount;
     };
 
-    var formatEuro = function (n) {
-      return new Intl.NumberFormat('fr-BE', {
-        style: 'currency',
-        currency: 'EUR',
-        maximumFractionDigits: 0
-      }).format(Math.round(n / 100) * 100);
-    };
-
     var showResult = function () {
-      var base = ESTIMATES[answers.projet] || ESTIMATES.toiture;
-      var factor = (PREMIUM_ADJUST[answers.bien] || 1) * (AGE_ADJUST[answers.age] || 1);
+      var label = TRAVAUX[answers.projet] || 'Travaux';
 
       var setText = function (sel, value) {
         var el = $(sel, wizard);
         if (el) el.textContent = value;
       };
 
-      setText('[data-result-scope]', base.label);
-      setText('[data-result-range]', formatEuro(base.low * factor) + ' – ' + formatEuro(base.high * factor));
-      setText('[data-result-duration]', base.weeks);
+      setText('[data-result-scope]', label);
 
-      // Belgian renovation VAT: 6 % on homes over 10 years old, 21 % otherwise.
+      // TVA belge sur la rénovation : 6 % pour un logement de plus de dix ans,
+      // 21 % sinon. C'est une règle légale, pas une estimation.
       var reduced = answers.age !== 'apres-1990';
-      setText('[data-result-tva]', reduced ? 'TVA 6 % applicable' : 'TVA 21 % applicable');
+      setText('[data-result-tva]', reduced ? 'TVA 6 %' : 'TVA 21 %');
       setText(
         '[data-result-tva-note]',
         reduced
-          ? 'Votre bien a plus de 10 ans : le taux réduit de 6 % s’applique à la main-d’œuvre et aux matériaux fournis.'
-          : 'Bien de moins de 10 ans : le taux standard de 21 % s’applique. Nous vérifions votre situation exacte lors de la visite.'
+          ? 'Votre bien a plus de dix ans et sert de logement privé : le taux réduit de 6 % s’applique à la main-d’œuvre comme aux matériaux que je fournis.'
+          : 'Bien de moins de dix ans : le taux standard de 21 % s’applique. Je vérifie votre situation exacte lors de la visite.'
       );
 
       var summary = $('[data-result-summary]', wizard);
@@ -323,16 +313,16 @@
         }).join(' · ');
       }
 
-      // Hand the answers to the quote form so nothing has to be re-typed.
+      // Transmet le contexte au formulaire de devis.
       try {
         window.sessionStorage.setItem(STORE_KEY, JSON.stringify({
           projet: answers.projet,
-          label: base.label,
+          label: label,
           summary: summary ? summary.textContent : '',
-          range: $('[data-result-range]', wizard).textContent
+          tva: reduced ? 'TVA 6 %' : 'TVA 21 %'
         }));
       } catch (err) {
-        /* private browsing — the handoff is a bonus, never a requirement */
+        /* navigation privée — la reprise est un bonus, jamais un prérequis */
       }
 
       index = questionCount;
@@ -402,7 +392,7 @@
       return;
     }
 
-    field.value = [data.label, data.summary, data.range].filter(Boolean).join(' · ');
+    field.value = [data.label, data.summary, data.tva].filter(Boolean).join(' · ');
 
     var select = $('#projet');
     if (select && data.projet) {
@@ -416,9 +406,9 @@
     if (note) {
       note.hidden = false;
       note.classList.remove('hidden');
-      note.textContent = 'Votre estimation a été reprise : ' +
-        [data.label, data.range].filter(Boolean).join(' — ') +
-        '. Complétez le formulaire pour recevoir le devis détaillé.';
+      note.textContent = 'Reprise de votre simulation : ' +
+        [data.label, data.tva].filter(Boolean).join(' — ') +
+        '. Complétez le formulaire pour recevoir votre devis.';
     }
   }
 
