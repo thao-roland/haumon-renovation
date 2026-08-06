@@ -24,7 +24,7 @@ Les icônes sont des SVG tracés à la main, `stroke-width: 1`, sans remplissage
 |---|---|
 | `index.html` | Hero plein écran (toiture), chiffres clés animés, **bento 3 colonnes** des trois engagements, **bande photo pleine largeur** (jardin) en parallaxe, métiers, méthode en 4 étapes, témoignage, **test d'éligibilité** interactif |
 | `services.html` | Les quatre métiers en détail (ancres `#toiture`, `#facade`, `#exterieurs`, `#interieur`), bandeau de marques défilant, FAQ en accordéon |
-| `realisations.html` | Galerie de 9 chantiers filtrable par métier, statistiques, témoignages |
+| `realisations.html` | Galerie construite depuis `assets/js/projets.js` : filtres par métier et visionneuse avant/après. Message d'attente tant que la liste est vide |
 | `entreprise.html` | Histoire, principes, chronologie 2006 → 2025, garanties et assurances |
 | `contact.html` | Formulaire de devis validé côté client, coordonnées, horaires, zone d'intervention |
 
@@ -44,6 +44,20 @@ Modules indépendants, chacun inactif si son point d'ancrage est absent de la pa
 
 `prefers-reduced-motion` neutralise toutes les animations. Sans JavaScript, la page
 reste entièrement lisible : les révélations sont conditionnées par la classe `.js`.
+
+## Ajouter un chantier à la galerie
+
+1. Déposer les photos dans **`assets/images/`** (conventions dans le README de ce dossier).
+2. Ajouter une entrée dans **`assets/js/projets.js`** : titre, métier, lieu, année,
+   description et liste des photos.
+
+La grille, les filtres et la visionneuse se construisent à partir de cette liste —
+le HTML n'est jamais à toucher. Les filtres n'affichent que les métiers réellement
+présents, et n'apparaissent qu'à partir de deux métiers différents. Liste vide :
+la page montre un message d'attente plutôt qu'une grille vide.
+
+`scripts/build.mjs` copie `assets/images/` dans `dist/`, en laissant le README du
+dossier hors du site publié.
 
 ## Images
 

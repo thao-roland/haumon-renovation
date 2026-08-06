@@ -202,49 +202,187 @@
   }
 
   /* ------------------------------------------------------------------
-     Project gallery filter.
+     Galerie des réalisations — construite à partir de window.PROJETS
+     (assets/js/projets.js). Filtres et visionneuse compris.
      ------------------------------------------------------------------ */
-  function initFilters() {
-    var bar = $('[data-filter-bar]');
-    var grid = $('[data-filter-grid]');
-    if (!bar || !grid) return;
+  var METIERS = {
+    carrelage: 'Carrelage & salle de bain',
+    maconnerie: 'Maçonnerie',
+    toiture: 'Toiture plate',
+    menuiserie: 'Menuiserie',
+    plafonnage: 'Plafonnage & gyproc'
+  };
 
-    var buttons = $$('[data-filter]', bar);
-    var cards = $$('[data-category]', grid);
-    var empty = $('[data-filter-empty]');
+  function initGallery() {
+    var grid = $('[data-gallery-grid]');
+    if (!grid) return;
 
-    var apply = function (key) {
-      var shown = 0;
-      cards.forEach(function (card) {
-        var match = key === 'all' || card.getAttribute('data-category') === key;
-        if (match) shown++;
-        card.style.display = match ? '' : 'none';
-        card.classList.toggle('is-visible', match);
-        if (match && !reduceMotion) {
-          card.style.animation = 'none';
-          // reflow so the animation can restart
-          void card.offsetWidth;
-          card.style.animation = 'stepIn 0.5s var(--ease) both';
-        }
-      });
-      if (empty) empty.hidden = shown !== 0;
+    var projets = (window.PROJETS || []).filter(function (p) {
+      return p && p.images && p.images.length;
+    });
+
+    var empty = $('[data-gallery-empty]');
+    var bar = $('[data-gallery-filters]');
+    var intro = $('[data-gallery-intro]');
+
+    if (!projets.length) {
+      if (empty) empty.hidden = false;
+      return;
+    }
+
+    if (empty) empty.hidden = true;
+    if (intro) intro.hidden = false;
+
+    var esc = function (str) {
+      return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     };
 
-    buttons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        buttons.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-        btn.setAttribute('aria-pressed', 'true');
-        apply(btn.getAttribute('data-filter'));
+    // ── Cartes ──────────────────────────────────────────────────────
+    grid.innerHTML = projets.map(function (p, i) {
+      var first = p.images[0];
+      var label = METIERS[p.metier] || 'Chantier';
+      var meta = [p.lieu, p.annee].filter(Boolean).join(' · ');
+      return '' +
+        '<article class="panel group overflow-hidden" data-category="' + esc(p.metier) + '" data-reveal>' +
+          '<button type="button" class="block w-full text-left" data-open-projet="' + i + '">' +
+            '<figure class="media media-zoom aspect-[5/4] w-full">' +
+              '<img src="' + esc(first.src) + '" alt="' + esc(first.alt || p.titre) + '" loading="lazy" decoding="async">' +
+              '<div class="scrim-card absolute inset-0 opacity-70"></div>' +
+              '<span class="chip absolute left-5 top-5 bg-ink-950/60 backdrop-blur">' + esc(label) + '</span>' +
+              (p.images.length > 1
+                ? '<span class="chip absolute right-5 top-5 bg-ink-950/60 backdrop-blur">' + p.images.length + ' photos</span>'
+                : '') +
+            '</figure>' +
+            '<div class="p-7">' +
+              '<div class="flex items-baseline justify-between gap-4">' +
+                '<h3 class="text-lg font-normal tracking-tight text-white">' + esc(p.titre) + '</h3>' +
+                '<span class="text-xs font-light text-silver-600">' + esc(meta) + '</span>' +
+              '</div>' +
+              (p.description ? '<p class="lede mt-3 text-sm">' + esc(p.description) + '</p>' : '') +
+            '</div>' +
+          '</button>' +
+        '</article>';
+    }).join('');
+
+    // ── Filtres : uniquement les métiers réellement présents ────────
+    if (bar) {
+      var presents = [];
+      projets.forEach(function (p) {
+        if (p.metier && presents.indexOf(p.metier) === -1) presents.push(p.metier);
       });
-    });
+
+      if (presents.length > 1) {
+        bar.hidden = false;
+        bar.innerHTML = '<button type="button" class="opt w-auto justify-center px-5 py-2.5 text-sm" ' +
+            'data-filter="all" aria-pressed="true">Tout</button>' +
+          presents.map(function (m) {
+            return '<button type="button" class="opt w-auto justify-center px-5 py-2.5 text-sm" ' +
+              'data-filter="' + esc(m) + '" aria-pressed="false">' + esc(METIERS[m] || m) + '</button>';
+          }).join('');
+
+        var buttons = $$('[data-filter]', bar);
+        var cards = $$('[data-category]', grid);
+
+        buttons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var key = btn.getAttribute('data-filter');
+            buttons.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+            btn.setAttribute('aria-pressed', 'true');
+            cards.forEach(function (card) {
+              var match = key === 'all' || card.getAttribute('data-category') === key;
+              card.style.display = match ? '' : 'none';
+              if (match && !reduceMotion) {
+                card.style.animation = 'none';
+                void card.offsetWidth;
+                card.style.animation = 'stepIn 0.5s var(--ease) both';
+              }
+            });
+          });
+        });
+      }
+    }
+
+    initReveal();
+    initMedia();
+    initLightbox(projets, esc);
   }
 
   /* ------------------------------------------------------------------
-     Eligibility wizard — 3 questions, then an indicative estimate.
-     Purely client-side; no data leaves the page.
+     Visionneuse — parcourt les photos d'un chantier (avant / après / détail).
      ------------------------------------------------------------------ */
-  // Les cinq métiers proposés par le formulaire. Aucun montant n'est affiché :
-  // les prix relèvent du devis, pas d'une estimation automatique.
+  function initLightbox(projets, esc) {
+    var box = $('[data-lightbox]');
+    if (!box) return;
+
+    var imgEl = $('[data-lb-img]', box);
+    var capEl = $('[data-lb-caption]', box);
+    var titleEl = $('[data-lb-title]', box);
+    var countEl = $('[data-lb-count]', box);
+    var prevBtn = $('[data-lb-prev]', box);
+    var nextBtn = $('[data-lb-next]', box);
+    var closeBtn = $('[data-lb-close]', box);
+
+    var projet = null;
+    var idx = 0;
+    var lastFocus = null;
+
+    var paint = function () {
+      var photo = projet.images[idx];
+      imgEl.src = photo.src;
+      imgEl.alt = photo.alt || projet.titre;
+      titleEl.textContent = projet.titre;
+      capEl.textContent = [photo.legende, projet.lieu, projet.annee].filter(Boolean).join(' · ');
+      countEl.textContent = (idx + 1) + ' / ' + projet.images.length;
+      var solo = projet.images.length < 2;
+      prevBtn.hidden = solo;
+      nextBtn.hidden = solo;
+    };
+
+    var open = function (i, trigger) {
+      projet = projets[i];
+      if (!projet) return;
+      idx = 0;
+      lastFocus = trigger || null;
+      paint();
+      box.hidden = false;
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+
+    var close = function () {
+      box.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    };
+
+    var step = function (delta) {
+      idx = (idx + delta + projet.images.length) % projet.images.length;
+      paint();
+    };
+
+    $$('[data-open-projet]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        open(parseInt(btn.getAttribute('data-open-projet'), 10), btn);
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', function () { step(-1); });
+    nextBtn.addEventListener('click', function () { step(1); });
+    box.addEventListener('click', function (e) {
+      if (e.target === box) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (box.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+  }
+
   var TRAVAUX = {
     carrelage: 'Carrelage & salle de bain',
     maconnerie: 'Maçonnerie',
@@ -519,7 +657,7 @@
     initCounters();
     initParallax();
     initAccordion();
-    initFilters();
+    initGallery();
     initWizard();
     initQuoteHandoff();
     initForms();

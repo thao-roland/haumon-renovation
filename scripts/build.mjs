@@ -33,8 +33,24 @@ for (const page of pages) {
 // 3. JavaScript
 await cp(join(root, 'assets', 'js'), join(dist, 'assets', 'js'), { recursive: true });
 
+// 4. Photos des chantiers — le README du dossier reste hors du site publié.
+const imgSrc = join(root, 'assets', 'images');
+let photos = 0;
+try {
+  const files = (await readdir(imgSrc)).filter((f) => !f.endsWith('.md'));
+  if (files.length) {
+    await mkdir(join(dist, 'assets', 'images'), { recursive: true });
+    for (const file of files) {
+      await cp(join(imgSrc, file), join(dist, 'assets', 'images', file), { recursive: true });
+    }
+    photos = files.length;
+  }
+} catch {
+  /* dossier absent : rien à copier */
+}
+
 const { size } = await stat(join(dist, 'assets', 'css', 'site.css'));
 console.log(
-  `\ndist/ → ${pages.length} pages · site.css ${(size / 1024).toFixed(1)} ko\n` +
+  `\ndist/ → ${pages.length} pages · site.css ${(size / 1024).toFixed(1)} ko · ${photos} photo(s)\n` +
     pages.map((p) => `  · ${p}`).join('\n')
 );
