@@ -33,6 +33,17 @@ Les icônes sont des SVG tracés à la main, `stroke-width: 1`, sans remplissage
 Modules indépendants, chacun inactif si son point d'ancrage est absent de la page :
 
 - **Révélations au défilement** — `IntersectionObserver`, cascade réglée par `data-reveal-stagger`
+- **Titres ligne par ligne** (`data-split`) — le texte est découpé en mots, la mise en
+  page décide où tombent les lignes, chaque ligne est réenveloppée dans un masque puis
+  remonte avec 90 ms de décalage. Le découpage se refait au changement de largeur et une
+  fois la police chargée, les lignes ne tombant plus au même endroit. Un titre contenant
+  des balises internes est laissé intact plutôt que découpé de travers, et un filet de
+  sécurité compare les caractères avant/après : au moindre écart, le titre d'origine est
+  restauré.
+- **Ouverture en volet** (`data-reveal="clip"`) — la photo se déroule du bas vers le haut
+  sur sa plaque dégradée. Le `clip-path` porte sur l'image et jamais sur l'élément
+  observé : clippé à hauteur nulle, il n'entrerait jamais « à l'écran » et ne serait donc
+  jamais révélé.
 - **Compteurs** — animation `easeOutExpo` déclenchée à 50 % de visibilité
 - **Parallaxe** — dérive verticale de la photo de jardin, limitée par `requestAnimationFrame`
 - **Navigation** — état givré au défilement, panneau mobile, fermeture à `Échap`

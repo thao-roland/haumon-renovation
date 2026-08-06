@@ -120,6 +120,201 @@
   }
 
   /* ------------------------------------------------------------------
+     Titres révélés ligne par ligne.
+
+     Le texte est découpé en mots, la mise en page décide où tombent les
+     lignes, puis chaque ligne est réenveloppée dans un masque. Le découpage
+     est refait si la largeur change, les lignes n'étant plus les mêmes.
+     ------------------------------------------------------------------ */
+  function initSplit() {
+    var targets = $$('[data-split]');
+    if (!targets.length) return;
+
+    if (reduceMotion) {
+      targets.forEach(function (el) { el.classList.add('is-split-in'); });
+      return;
+    }
+
+    var STEP = 90; // décalage entre deux lignes
+
+    var wrapWords = function (root) {
+      var texts = [];
+      var collect = function (node) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          var child = node.childNodes[i];
+          if (child.nodeType === 3) texts.push(child);
+          else if (child.nodeType === 1 && child.tagName !== 'BR') collect(child);
+        }
+      };
+      collect(root);
+
+      texts.forEach(function (textNode) {
+        var parts = textNode.textContent.split(/(\s+)/);
+        var frag = document.createDocumentFragment();
+        parts.forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) {
+            frag.appendChild(document.createTextNode(part));
+            return;
+          }
+          var word = document.createElement('span');
+          word.className = 'split-w';
+          word.textContent = part;
+          frag.appendChild(word);
+        });
+        textNode.parentNode.replaceChild(frag, textNode);
+      });
+    };
+
+    var split = function (el) {
+      if (el._splitSrc == null) el._splitSrc = el.innerHTML;
+      el.innerHTML = el._splitSrc;
+
+      var before = el.textContent;
+      wrapWords(el);
+
+      // Après découpage, le titre ne doit contenir que des mots, des espaces
+      // et des <br>. Toute autre balise (un <span> stylé, par exemple) rendrait
+      // le regroupement en lignes hasardeux : on renonce proprement.
+      var flat = Array.prototype.slice.call(el.childNodes);
+      var simple = flat.every(function (n) {
+        return n.nodeType === 3 ||
+          (n.nodeType === 1 && (n.tagName === 'BR' ||
+            (n.classList && n.classList.contains('split-w'))));
+      });
+      if (!simple) {
+        el.innerHTML = el._splitSrc;
+        el.classList.add('is-split-in');
+        return false;
+      }
+
+      // Regroupement par position verticale : c'est la mise en page qui tranche.
+      var lines = [];
+      var current = null;
+      var lastTop = null;
+      flat.forEach(function (node) {
+        if (node.nodeType === 1 && node.classList && node.classList.contains('split-w')) {
+          var top = Math.round(node.getBoundingClientRect().top);
+          if (current === null || Math.abs(top - lastTop) > 2) {
+            current = [];
+            lines.push(current);
+            lastTop = top;
+          }
+          current.push(node);
+        } else if (node.nodeType === 3 && current) {
+          current.push(node);
+        }
+        // Les <br> disparaissent : la coupure devient structurelle.
+      });
+
+      if (!lines.length) {
+        el.innerHTML = el._splitSrc;
+        el.classList.add('is-split-in');
+        return false;
+      }
+
+      var base = parseInt(el.getAttribute('data-split-delay'), 10) || 0;
+      var frag = document.createDocumentFragment();
+      lines.forEach(function (nodes, i) {
+        var mask = document.createElement('span');
+        mask.className = 'split-line';
+        var inner = document.createElement('span');
+        inner.style.setProperty('--line-delay', (base + i * STEP) + 'ms');
+        nodes.forEach(function (n) { inner.appendChild(n); });
+        // La coupure était un <br> : sans cet espace, « carrelage,au » serait
+        // collé à la copie du texte comme pour un lecteur d'écran.
+        if (i < lines.length - 1) inner.appendChild(document.createTextNode(' '));
+        mask.appendChild(inner);
+        frag.appendChild(mask);
+      });
+
+      el.innerHTML = '';
+      el.appendChild(frag);
+
+      // Filet de sécurité : les caractères doivent être identiques. L'espacement
+      // est ignoré, puisque le découpage en ajoute volontairement en fin de ligne.
+      var norm = function (t) { return t.replace(/\s+/g, ''); };
+      if (norm(el.textContent) !== norm(before)) {
+        el.innerHTML = el._splitSrc;
+        el.classList.add('is-split-in');
+        return false;
+      }
+      return true;
+    };
+
+    var prepare = function () {
+      targets.forEach(function (el) {
+        // Une entrée de hero pilotée par CSS ferait doublon avec les lignes :
+        // on reprend son délai et on la désactive.
+        if (el.hasAttribute('data-intro')) {
+          var delay = parseInt(el.style.getPropertyValue('--intro-delay'), 10) || 0;
+          el.setAttribute('data-split-delay', String(delay));
+          el.removeAttribute('data-intro');
+        }
+        el._splitOk = split(el);
+      });
+    };
+
+    prepare();
+
+    // Les lignes tombent ailleurs une fois la police chargée.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        targets.forEach(function (el) {
+          if (!el._splitOk) return;
+          var wasIn = el.classList.contains('is-split-in');
+          el.classList.remove('is-split-in');
+          el._splitOk = split(el);
+          if (wasIn) {
+            void el.offsetWidth;
+            el.classList.add('is-split-in');
+          }
+        });
+      });
+    }
+
+    var reveal = function (el) { el.classList.add('is-split-in'); };
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(reveal);
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          io.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+
+      targets.forEach(function (el) {
+        // Un titre déjà à l'écran au chargement n'attend pas le défilement.
+        if (el.getBoundingClientRect().top < window.innerHeight) reveal(el);
+        else io.observe(el);
+      });
+    }
+
+    var lastWidth = window.innerWidth;
+    var timer = null;
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastWidth) return; // le clavier mobile ne compte pas
+      lastWidth = window.innerWidth;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () {
+        targets.forEach(function (el) {
+          if (!el._splitOk) return;
+          var wasIn = el.classList.contains('is-split-in');
+          el.classList.remove('is-split-in');
+          el._splitOk = split(el);
+          if (wasIn) {
+            void el.offsetWidth;
+            el.classList.add('is-split-in');
+          }
+        });
+      }, 220);
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Count-up statistics.
      ------------------------------------------------------------------ */
   function initCounters() {
@@ -708,6 +903,7 @@
     initMedia();
     initNav();
     initReveal();
+    initSplit();
     initCounters();
     initParallax();
     initAccordion();
