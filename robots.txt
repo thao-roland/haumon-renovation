@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Les photos de chantiers ont vocation à ressortir dans Google Images.
+Allow: /assets/images/
+
+Sitemap: https://www.haumontrenovation.be/sitemap.xml

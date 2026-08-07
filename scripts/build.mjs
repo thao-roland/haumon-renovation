@@ -30,10 +30,15 @@ for (const page of pages) {
   await cp(join(root, page), join(dist, page));
 }
 
-// 3. JavaScript
+// 3. Fichiers de référencement, servis à la racine du domaine
+for (const file of ['sitemap.xml', 'robots.txt']) {
+  await cp(join(root, file), join(dist, file));
+}
+
+// 4. JavaScript
 await cp(join(root, 'assets', 'js'), join(dist, 'assets', 'js'), { recursive: true });
 
-// 4. Photos des chantiers — le README du dossier reste hors du site publié.
+// 5. Photos des chantiers — le README du dossier reste hors du site publié.
 const imgSrc = join(root, 'assets', 'images');
 let photos = 0;
 try {
