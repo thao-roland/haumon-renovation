@@ -893,18 +893,41 @@
           champ('Simulation TVA', val('contexte')) +
           '\nMessage envoyé depuis haumontrenovation.be';
 
-        var lien = 'mailto:brandon@haumontrenovation.be'
+        var DEST = 'brandon@haumontrenovation.be';
+
+        // Gmail directement : un mailto: reste sans effet quand aucun logiciel
+        // de messagerie n'est associé au navigateur, ce qui est le cas courant
+        // sur un poste où tout passe par le webmail.
+        var gmail = 'https://mail.google.com/mail/?view=cm&fs=1'
+          + '&to=' + encodeURIComponent(DEST)
+          + '&su=' + encodeURIComponent(sujet)
+          + '&body=' + encodeURIComponent(corps);
+
+        var mailto = 'mailto:' + DEST
           + '?subject=' + encodeURIComponent(sujet)
           + '&body=' + encodeURIComponent(corps);
+
+        // Sans l'option 'noopener', window.open renvoie une référence : c'est le
+        // seul moyen de savoir si le navigateur a bloqué l'onglet. Le lien vers
+        // la fenêtre ouvrante est coupé juste après.
+        var onglet = window.open(gmail, '_blank');
+        if (onglet) {
+          try { onglet.opener = null; } catch (e) { /* navigateur strict */ }
+        }
 
         if (status) {
           status.hidden = false;
           status.className = 'mt-6 text-sm text-sage-300';
-          status.textContent =
-            'Votre messagerie s’ouvre avec le message déjà rédigé. Il ne reste qu’à l’envoyer.';
+          status.innerHTML = onglet
+            ? 'Gmail s’ouvre dans un nouvel onglet avec le message rédigé — il ne reste qu’à l’envoyer. ' +
+              '<a class="underline decoration-sage-400/40 underline-offset-4 transition-colors hover:text-white" href="' +
+              mailto + '">Utiliser plutôt mon logiciel de messagerie</a>.'
+            : 'Votre navigateur a bloqué l’ouverture de l’onglet. ' +
+              '<a class="underline decoration-sage-400/40 underline-offset-4 transition-colors hover:text-white" href="' +
+              gmail + '" target="_blank" rel="noopener">Ouvrir Gmail</a> ou ' +
+              '<a class="underline decoration-sage-400/40 underline-offset-4 transition-colors hover:text-white" href="' +
+              mailto + '">utiliser mon logiciel de messagerie</a>.';
         }
-
-        window.location.href = lien;
       });
     });
   }
