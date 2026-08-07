@@ -862,27 +862,49 @@
           return;
         }
 
-        if (submit) {
-          submit.disabled = true;
-          submit.dataset.label = submit.textContent;
-          submit.textContent = 'Envoi en cours…';
+        // Pas de serveur : on prépare le message dans la messagerie du visiteur.
+        var val = function (name) {
+          var el = form.querySelector('[name="' + name + '"]');
+          return el ? el.value.trim() : '';
+        };
+        var champ = function (label, value) {
+          return value ? label + ' : ' + value + '\n' : '';
+        };
+
+        var projetEl = form.querySelector('[name="projet"]');
+        var projetLabel = projetEl && projetEl.selectedIndex > 0
+          ? projetEl.options[projetEl.selectedIndex].text
+          : '';
+
+        var sujet = 'Demande de devis'
+          + (projetLabel ? ' — ' + projetLabel : '')
+          + (val('codepostal') ? ' (' + val('codepostal') + ')' : '');
+
+        var corps =
+          'Bonjour Brandon,\n\n' +
+          'Je souhaite recevoir un devis pour le projet suivant.\n\n' +
+          val('message') + '\n\n' +
+          '— — —\n' +
+          champ('Nom', val('nom')) +
+          champ('E-mail', val('email')) +
+          champ('Téléphone', val('telephone')) +
+          champ('Code postal du chantier', val('codepostal')) +
+          champ('Nature du projet', projetLabel) +
+          champ('Simulation TVA', val('contexte')) +
+          '\nMessage envoyé depuis haumontrenovation.be';
+
+        var lien = 'mailto:brandon@haumontrenovation.be'
+          + '?subject=' + encodeURIComponent(sujet)
+          + '&body=' + encodeURIComponent(corps);
+
+        if (status) {
+          status.hidden = false;
+          status.className = 'mt-6 text-sm text-sage-300';
+          status.textContent =
+            'Votre messagerie s’ouvre avec le message déjà rédigé. Il ne reste qu’à l’envoyer.';
         }
 
-        // Static site: no backend. Swap this block for a real POST when the
-        // form endpoint is available.
-        window.setTimeout(function () {
-          form.reset();
-          if (submit) {
-            submit.disabled = false;
-            submit.textContent = submit.dataset.label || 'Envoyer';
-          }
-          if (status) {
-            status.hidden = false;
-            status.className = 'mt-6 text-sm text-sage-300';
-            status.textContent =
-              'Merci. Votre demande est enregistrée — nous revenons vers vous sous 24 h ouvrables.';
-          }
-        }, 900);
+        window.location.href = lien;
       });
     });
   }

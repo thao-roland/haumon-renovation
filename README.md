@@ -159,8 +159,10 @@ internes des cinq pages.
 
 ## À brancher avant mise en ligne
 
-- **Formulaire de contact** — `initForms()` simule l'envoi (`setTimeout`). Remplacer ce
-  bloc par un `fetch()` vers le point d'entrée retenu (Formspree, Netlify Forms, API interne).
+- **Formulaire de contact** — sans serveur, `initForms()` compose un lien `mailto:` et
+  ouvre la messagerie du visiteur avec objet et corps pré-remplis. Pour un envoi direct
+  sans quitter le site, remplacer ce bloc par un `fetch()` vers un point d'entrée
+  (Formspree, Netlify Forms, API interne).
 - **Coordonnées** — téléphone, e-mail, adresse, numéro de TVA et numéro de police
   d'assurance sont des valeurs de démonstration, à remplacer partout (pied de page,
   navigation, page contact).
