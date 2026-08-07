@@ -891,7 +891,7 @@
           champ('Code postal du chantier', val('codepostal')) +
           champ('Nature du projet', projetLabel) +
           champ('Simulation TVA', val('contexte')) +
-          '\nMessage envoyé depuis haumontrenovation.be';
+          '\nMessage envoyé depuis haumont-renovation.com';
 
         var DEST = 'brandon@haumontrenovation.be';
 
