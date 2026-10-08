@@ -15,7 +15,7 @@
    Les deux listes vides : la page affiche un message d'attente.
 
    Métiers reconnus :
-     carrelage · maconnerie · toiture · menuiserie
+     carrelage · maconnerie · toiture · menuiserie · plafonnage
 
    Une photo sans métier reste dans la mosaïque, hors filtres.
    ========================================================================== */
@@ -68,15 +68,15 @@ window.PHOTOS = [
     legende: 'Porte intérieure en chêne clair',
     alt: 'Porte intérieure en chêne clair posée, poignée et paumelles noires' },
 
-  { src: 'assets/images/111.jpg',
-    legende: 'Pièce enduite, prête à peindre',
+  { src: 'assets/images/111.jpg', metier: 'plafonnage',
+    legende: 'Pièce plafonnée, prête à peindre',
     alt: 'Pièce aux murs plafonnés et enduits, prêts à recevoir la peinture' },
 
-  { src: 'assets/images/112.jpg',
+  { src: 'assets/images/112.jpg', metier: 'plafonnage',
     legende: 'Cloisons et sol carrelé effet bois',
     alt: 'Pièce cloisonnée en plaques de plâtre avec sol carrelé imitation bois' },
 
-  { src: 'assets/images/110.jpg',
+  { src: 'assets/images/110.jpg', metier: 'plafonnage',
     legende: 'Plateau de bureaux après cloisonnement',
     alt: 'Plateau de bureaux aménagé, cloisons acoustiques et postes de travail' }
 ];

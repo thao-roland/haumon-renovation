@@ -423,7 +423,8 @@
     carrelage: 'Carrelage & salle de bain',
     maconnerie: 'Maçonnerie',
     toiture: 'Toiture plate',
-    menuiserie: 'Menuiserie'
+    menuiserie: 'Menuiserie',
+    plafonnage: 'Plafonnage & gyproc'
   };
 
   function buildFilters(bar, grid, entries, esc) {
@@ -634,7 +635,8 @@
     carrelage: 'Carrelage & salle de bain',
     maconnerie: 'Maçonnerie',
     toiture: 'Toiture plate',
-    menuiserie: 'Menuiserie'
+    menuiserie: 'Menuiserie',
+    plafonnage: 'Plafonnage & gyproc'
   };
 
   var STORE_KEY = 'haumont:projet';
